@@ -17,3 +17,10 @@ Run docker container
 ```bash
 docker run --name todobackend -p 3000:3000 backendtodo:v1
 ```
+
+Push to odbayar94/todo-backend:lates
+You can run below command and execute the docker container application
+
+```bash
+docker run -p 3000:3000 odbayar94/todo-backend:lates
+```
