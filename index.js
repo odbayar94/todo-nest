@@ -1,8 +1,8 @@
 import express from "express";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const client = new MongoClient(
-  "mongodb://root:root@192.168.19.18:8080?authSource=admin"
+  "mongodb://root:root@172.29.80.1:8080?authSource=admin"
 );
 const database = client.db("todos");
 
@@ -40,10 +40,11 @@ app.delete("/todos/:id", async (req, res) => {
   const connection = await client.connect();
 
   const { id } = req.params;
-  await database.collection("todos").deleteOne({ _id: id });
-
+  const response = await database
+    .collection("todos")
+    .deleteOne({ _id: ObjectId(id) });
   connection.close();
-  res.status(204).send({ success: true });
+  res.status(200).send(response);
 });
 
 app.listen(port, () => {
