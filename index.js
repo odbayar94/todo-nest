@@ -2,13 +2,13 @@ import express from "express";
 import { MongoClient } from "mongodb";
 
 const client = new MongoClient(
-  "mongodb://root:root@localhost:8080?authSource=admin"
+  "mongodb://root:root@192.168.19.18:8080?authSource=admin"
 );
 const database = client.db("todos");
 
 const app = express();
 const port = 3000;
-
+app.use(express.json());
 app.get("/todos", async (req, res) => {
   const connection = await client.connect();
   const { title } = req.query;
@@ -28,6 +28,7 @@ app.get("/todos", async (req, res) => {
 app.post("/todos", async (req, res) => {
   const connection = await client.connect();
   const todo = req.body;
+  console.log(todo);
 
   await database.collection("todos").insertOne(todo);
 
